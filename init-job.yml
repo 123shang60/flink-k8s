@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: boot-flink
+  namespace: flink
+spec:
+  template:
+    spec:
+      serviceAccount: flink
+      restartPolicy: OnFailure
+      containers:
+      - name: start
+        image: apache/flink:1.13.1-scala_2.12
+        workingDir: /opt/flink
+        command: ["bash", "-c", "$FLINK_HOME/bin/kubernetes-session.sh \
+          -Dkubernetes.cluster-id=flink-test \
+          -Dkubernetes.jobmanager.service-account=flink \
+          -Dtaskmanager.memory.process.size=1024m \
+          -Dkubernetes.taskmanager.cpu=1 \
+          -Dtaskmanager.numberOfTaskSlots=1 \
+          -Dkubernetes.container.image=apache/flink:1.13.1-scala_2.12 \
+          -Dkubernetes.namespace=flink"]
