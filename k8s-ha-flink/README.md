@@ -1,4 +1,4 @@
-# zookeeper ha flink
+# kubernetes ha flink
 
 - 使用 k8s configmap 作为 flink 服务的高可用配置
 - 使用 s3 作为高可用数据存储后端
